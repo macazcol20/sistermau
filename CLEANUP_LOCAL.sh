@@ -1,208 +1,88 @@
 #!/bin/bash
 
-echo "🎨 Fixing Hero Text Alignment"
+echo "🔧 Fixing SQL File - Add Database Selection"
 echo ""
 
-WEB_CONTAINER=$(docker ps --format '{{.Names}}' | grep -E 'app$|web' | head -1)
+SQL_FILE=~/maureen-ecommerce/database/grocerry.sql
 
-# Backup current index.php
-docker cp $WEB_CONTAINER:/var/www/html/index.php /tmp/index_backup.php
-echo "✅ Backup created"
+if [ ! -f "$SQL_FILE" ]; then
+    echo "❌ SQL file not found!"
+    exit 1
+fi
 
-# Create fixed version with better vertical centering
-cat > /tmp/index_fixed.php << 'PHPEOF'
-<?php
-session_start();
-require_once 'utility/connection.php';
+# Backup
+cp "$SQL_FILE" "${SQL_FILE}.nodbselect_backup"
+echo "✅ Backup: ${SQL_FILE}.nodbselect_backup"
+echo ""
 
-// Fetch categories with images
-$cat_query = "SELECT * FROM categories WHERE status = 1 ORDER BY id ASC";
-$cat_result = mysqli_query($con, $cat_query);
-
-// Fetch products
-$product_query = "SELECT * FROM product WHERE status = 1 ORDER BY id DESC LIMIT 12";
-$product_result = mysqli_query($con, $product_query);
-?>
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sister Mau - Electronics, Furniture & Building Equipment</title>
-    <link rel="stylesheet" href="assets/css/style.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <style>
-        *{margin:0;padding:0;box-sizing:border-box}
-        :root{--primary-blue:#0046BE;--dark-blue:#001E3C;--orange:#FF6B35}
-        body{font-family:'Segoe UI',Arial,sans-serif;background:#fff}
-        
-        /* FIXED: Better vertical centering for hero */
-        .hero-static{
-            background:linear-gradient(135deg,var(--primary-blue),var(--dark-blue));
-            color:#fff;
-            padding:80px 20px;
-            text-align:center;
-            margin-bottom:40px;
-            display:flex;
-            flex-direction:column;
-            align-items:center;
-            justify-content:center;
-            min-height:200px;
-        }
-        .hero-static h1{font-size:42px;margin-bottom:15px;line-height:1.2}
-        .hero-static p{font-size:18px;opacity:.9;max-width:800px}
-        
-        .category-section{max-width:1400px;margin:50px auto;padding:0 20px}
-        .section-title{font-size:32px;margin-bottom:30px;color:#333}
-        
-        /* Category Grid with REAL IMAGES */
-        .category-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:20px;margin-bottom:60px}
-        .category-card{
-            background:#fff;border:1px solid #e0e0e0;border-radius:8px;
-            padding:20px;text-align:center;text-decoration:none;
-            color:#333;transition:all .3s;overflow:hidden;
-        }
-        .category-card:hover{border-color:var(--primary-blue);transform:translateY(-3px);box-shadow:0 4px 12px rgba(0,70,190,.15)}
-        
-        .category-image{
-            width:100%;height:180px;margin-bottom:15px;
-            display:flex;align-items:center;justify-content:center;
-            background:#f5f5f5;border-radius:8px;overflow:hidden;
-        }
-        .category-image img{max-width:100%;max-height:100%;object-fit:contain}
-        .category-name{font-size:16px;font-weight:600;color:#1d252c}
-        
-        /* Product Grid */
-        .products-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:25px;margin-top:30px}
-        .product-card{background:#fff;border:1px solid #e0e0e0;border-radius:8px;overflow:hidden;transition:all .3s;text-decoration:none;color:#333;display:block}
-        .product-card:hover{box-shadow:0 8px 20px rgba(0,0,0,.12);transform:translateY(-3px)}
-        .product-image{width:100%;height:280px;background:#f5f5f5;display:flex;align-items:center;justify-content:center;overflow:hidden}
-        .product-image img{max-width:100%;max-height:100%;object-fit:contain}
-        .product-info{padding:20px}
-        .product-info h3{font-size:16px;margin-bottom:8px;font-weight:600;min-height:40px}
-        .product-price{font-size:22px;font-weight:700;color:var(--dark-blue);margin:15px 0}
-        .add-to-cart-btn{width:100%;padding:12px;background:var(--primary-blue);color:#fff;border:none;border-radius:6px;font-size:15px;font-weight:600;cursor:pointer;transition:background .3s}
-        .add-to-cart-btn:hover{background:var(--dark-blue)}
-        .owl-carousel,.slider,.banner-carousel,.slick-slider{display:none!important}
-        .empty-state{text-align:center;padding:60px 20px;grid-column:1/-1;background:#f9f9f9;border-radius:12px}
-        .empty-state h3{font-size:24px;margin-bottom:15px;color:#666}
-        .empty-state p{color:#999;margin-bottom:20px}
-        .empty-state a{display:inline-block;padding:12px 24px;background:var(--primary-blue);color:#fff;text-decoration:none;border-radius:6px;font-weight:600;transition:background .3s}
-        .empty-state a:hover{background:var(--dark-blue)}
-    </style>
-</head>
-<body>
-
-<?php include 'require/top.php'; ?>
-
-<div class="hero-static">
-    <h1>Electronics, Furniture & Building Equipment - All in One Place</h1>
-</div>
-
-<div class="category-section">
-    <h2 class="section-title">Browse by Category</h2>
-    <div class="category-grid">
-        <?php 
-        if ($cat_result && mysqli_num_rows($cat_result) > 0) {
-            while($category = mysqli_fetch_assoc($cat_result)): 
-                $image = !empty($category['image']) ? $category['image'] : 'img-1.jpg';
-        ?>
-            <a href="view.php?category=<?php echo $category['id']; ?>" class="category-card">
-                <div class="category-image">
-                    <img src="media/categories/<?php echo htmlspecialchars($image); ?>" 
-                         alt="<?php echo htmlspecialchars($category['category']); ?>"
-                         onerror="this.src='assets/images/sample/img-1.jpg'">
-                </div>
-                <div class="category-name"><?php echo htmlspecialchars($category['category']); ?></div>
-            </a>
-        <?php 
-            endwhile;
-        } else {
-        ?>
-            <div class="empty-state">
-                <i class="fas fa-tags" style="font-size:48px;color:#ccc;margin-bottom:20px"></i>
-                <h3>No Categories Yet</h3>
-                <p>Start by adding product categories</p>
-                <a href="Admin/"><i class="fas fa-plus"></i> Go to Admin Panel</a>
-            </div>
-        <?php } ?>
-    </div>
+# Check if already has CREATE DATABASE and USE
+if grep -q "CREATE DATABASE.*grocerry" "$SQL_FILE" && grep -q "USE.*grocerry" "$SQL_FILE"; then
+    echo "✅ SQL file already has database selection"
+else
+    echo "Adding database creation and selection..."
     
-    <h2 class="section-title">Featured Products</h2>
-    <div class="products-grid">
-        <?php 
-        if ($product_result && mysqli_num_rows($product_result) > 0) {
-            while($product = mysqli_fetch_assoc($product_result)): 
-        ?>
-            <a href="product_detail.php?id=<?php echo $product['id']; ?>" class="product-card">
-                <div class="product-image">
-                    <?php if(!empty($product['img1'])): ?>
-                        <img src="media/product/<?php echo $product['img1']; ?>" alt="<?php echo htmlspecialchars($product['product_name']); ?>">
-                    <?php else: ?>
-                        <img src="assets/images/sample/img-1.jpg" alt="Product">
-                    <?php endif; ?>
-                </div>
-                <div class="product-info">
-                    <h3><?php echo htmlspecialchars($product['product_name']); ?></h3>
-                    <div class="product-price">KSh <?php echo number_format($product['price']); ?></div>
-                    <button class="add-to-cart-btn" onclick="event.preventDefault();addToCart(<?php echo $product['id']; ?>)">
-                        <i class="fas fa-cart-plus"></i> Add to Cart
-                    </button>
-                </div>
-            </a>
-        <?php 
-            endwhile;
-        } else {
-        ?>
-            <div class="empty-state">
-                <i class="fas fa-box-open" style="font-size:48px;color:#ccc;margin-bottom:20px"></i>
-                <h3>No Products Yet</h3>
-                <p>Start adding products to your store</p>
-                <a href="Admin/"><i class="fas fa-plus"></i> Go to Admin Panel</a>
-            </div>
-        <?php } ?>
-    </div>
-</div>
+    # Create temp file with database setup at the beginning
+    cat > /tmp/db_header.sql << 'SQLEOF'
+-- Create database if not exists
+CREATE DATABASE IF NOT EXISTS grocerry;
+USE grocerry;
 
-<?php include 'require/foot.php'; ?>
+SQLEOF
+    
+    # Combine header + original file
+    cat /tmp/db_header.sql "$SQL_FILE" > /tmp/grocerry_fixed.sql
+    
+    # Replace original
+    mv /tmp/grocerry_fixed.sql "$SQL_FILE"
+    rm /tmp/db_header.sql
+    
+    echo "✅ Added: CREATE DATABASE IF NOT EXISTS grocerry;"
+    echo "✅ Added: USE grocerry;"
+fi
 
-<script src="assets/js/jquery.js"></script>
-<script src="assets/js/script.js"></script>
-<script>
-function addToCart(productId){
-    fetch('assets/backend/cart/add.php',{
-        method:'POST',
-        headers:{'Content-Type':'application/x-www-form-urlencoded'},
-        body:'product_id='+productId+'&quantity=1'
-    })
-    .then(r=>r.json())
-    .then(d=>{
-        if(d.success){
-            alert('Product added to cart!');
-            location.reload();
-        }
-    })
-    .catch(e=>console.error(e));
-}
-</script>
-
-</body>
-</html>
-PHPEOF
-
-# Deploy to container
-docker cp /tmp/index_fixed.php $WEB_CONTAINER:/var/www/html/index.php
-
-# Save locally
-cp /tmp/index_fixed.php ~/maureen-ecommerce/index.php
-
-echo "✅ Hero text centered!"
 echo ""
-echo "Changes:"
-echo "  • Removed subtitle"
-echo "  • Centered text vertically with flexbox"
-echo "  • Added min-height for better spacing"
+echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+echo "Fixing Dockerfile in database directory"
+echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
 echo ""
-echo "🌐 Refresh: http://localhost:3000 (Ctrl+Shift+R)"
 
-rm /tmp/index_fixed.php
+# The Dockerfile should NOT be copied to init directory
+# Let's check the database Dockerfile
+DB_DOCKERFILE=~/maureen-ecommerce/database/Dockerfile
+
+if [ -f "$DB_DOCKERFILE" ]; then
+    echo "Current Dockerfile content:"
+    cat "$DB_DOCKERFILE"
+    echo ""
+    
+    # Fix: Only copy .sql files, not everything
+    cat > "$DB_DOCKERFILE" << 'DOCKERFILE'
+FROM mysql:latest
+COPY *.sql /docker-entrypoint-initdb.d/
+DOCKERFILE
+    
+    echo "✅ Fixed Dockerfile to only copy .sql files"
+else
+    echo "⚠️  Dockerfile not found, creating..."
+    cat > "$DB_DOCKERFILE" << 'DOCKERFILE'
+FROM mysql:latest
+COPY *.sql /docker-entrypoint-initdb.d/
+DOCKERFILE
+    echo "✅ Created Dockerfile"
+fi
+
+echo ""
+echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+echo "✅ FIXES COMPLETE!"
+echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+echo ""
+echo "Changes made:"
+echo "  1. Added 'CREATE DATABASE IF NOT EXISTS grocerry;' to SQL"
+echo "  2. Added 'USE grocerry;' to SQL"
+echo "  3. Fixed Dockerfile to only copy *.sql files"
+echo ""
+echo "Now rebuild:"
+echo "  docker-compose down"
+echo "  docker-compose up -d --build"
+echo "  sleep 20"
+echo ""
