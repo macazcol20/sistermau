@@ -1,48 +1,67 @@
 #!/bin/bash
 
-echo "📦 Adding 4 Categories to Sister Mau..."
+echo "🔧 Fixing SQL Syntax Error"
 echo ""
 
-DB_CONTAINER=$(docker ps --format '{{.Names}}' | grep -E 'db|database' | head -1)
-WEB_CONTAINER=$(docker ps --format '{{.Names}}' | grep -E 'app$|web' | head -1)
+SQL_FILE=~/maureen-ecommerce/database/grocerry.sql
 
-# Add categories
-echo "➕ Adding categories..."
-docker exec $DB_CONTAINER mysql -u root -ppasswd grocerry << 'EOSQL'
--- Clear existing categories
+# Remove the bad additions
+echo "Restoring original SQL from backup..."
+if [ -f "${SQL_FILE}.backup" ]; then
+    cp "${SQL_FILE}.backup" "$SQL_FILE"
+    echo "✅ Original restored"
+else
+    echo "❌ No backup found!"
+    exit 1
+fi
+
+echo ""
+echo "Adding correct SQL syntax..."
+echo ""
+
+# Add correct SQL (MySQL compatible)
+cat >> "$SQL_FILE" << 'SQLEOF'
+
+-- ============================================
+-- SISTER MAU CUSTOMIZATIONS
+-- ============================================
+
+-- Add image column to categories (MySQL compatible way)
+SET @col_exists = (SELECT COUNT(*) 
+    FROM INFORMATION_SCHEMA.COLUMNS 
+    WHERE TABLE_SCHEMA = 'grocerry' 
+    AND TABLE_NAME = 'categories' 
+    AND COLUMN_NAME = 'image');
+
+SET @query = IF(@col_exists = 0, 
+    'ALTER TABLE categories ADD COLUMN image VARCHAR(255) AFTER category', 
+    'SELECT "Column already exists" AS info');
+
+PREPARE stmt FROM @query;
+EXECUTE stmt;
+DEALLOCATE PREPARE stmt;
+
+-- Clear and populate categories
 DELETE FROM categories;
+INSERT INTO categories (id, category, image, status) VALUES
+(1, 'TVs', 'samsung-tv.jpg', 1),
+(2, 'Surround Sounds', 'soundbar.jpg', 1),
+(3, 'Furniture', 'furniture.jpg', 1),
+(4, 'Cars', 'car.jpg', 1),
+(5, 'Laptops', 'laptop.jpg', 1);
 
--- Add 4 new categories
-INSERT INTO categories (id, category, status) VALUES
-(1, 'TVs', 1),
-(2, 'Surround Sounds', 1),
-(3, 'Furniture', 1),
-(4, 'Cars', 1);
+-- Create admin account
+DELETE FROM admin;
+INSERT INTO admin (username, password) VALUES ('admin', MD5('admin123'));
 
--- Show what was added
-SELECT * FROM categories;
-EOSQL
+-- ============================================
+-- END CUSTOMIZATIONS
+-- ============================================
+SQLEOF
 
+echo "✅ SQL file fixed!"
 echo ""
-echo "✅ Categories added!"
-echo ""
-echo "📊 Current categories:"
-docker exec $DB_CONTAINER mysql -u root -ppasswd grocerry -e "SELECT id, category, status FROM categories;" 2>/dev/null
-
-echo ""
-echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
-echo "✅ SUCCESS! 4 Categories Added"
-echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
-echo ""
-echo "Categories added:"
-echo "   1. TVs"
-echo "   2. Surround Sounds"
-echo "   3. Furniture"
-echo "   4. Cars"
-echo ""
-echo "🌐 Refresh your browser: http://localhost:3000"
-echo "   Press Ctrl+Shift+R to see the categories!"
-echo ""
-echo "📝 Next: Add products via Admin Panel"
-echo "   http://localhost:3000/Admin/"
+echo "Now rebuild:"
+echo "  docker-compose down"
+echo "  docker-compose up -d --build"
 echo ""

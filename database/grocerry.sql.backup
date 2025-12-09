@@ -1284,38 +1284,3 @@ COMMIT;
 
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */
 ;
--- ============================================
--- SISTER MAU CUSTOMIZATIONS
--- ============================================
-
--- Add image column to categories (MySQL compatible way)
-SET @col_exists = (SELECT COUNT(*) 
-    FROM INFORMATION_SCHEMA.COLUMNS 
-    WHERE TABLE_SCHEMA = 'grocerry' 
-    AND TABLE_NAME = 'categories' 
-    AND COLUMN_NAME = 'image');
-
-SET @query = IF(@col_exists = 0, 
-    'ALTER TABLE categories ADD COLUMN image VARCHAR(255) AFTER category', 
-    'SELECT "Column already exists" AS info');
-
-PREPARE stmt FROM @query;
-EXECUTE stmt;
-DEALLOCATE PREPARE stmt;
-
--- Clear and populate categories
-DELETE FROM categories;
-INSERT INTO categories (id, category, image, status) VALUES
-(1, 'TVs', 'samsung-tv.jpg', 1),
-(2, 'Surround Sounds', 'soundbar.jpg', 1),
-(3, 'Furniture', 'furniture.jpg', 1),
-(4, 'Cars', 'car.jpg', 1),
-(5, 'Laptops', 'laptop.jpg', 1);
-
--- Create admin account
-DELETE FROM admin;
-INSERT INTO admin (username, password) VALUES ('admin', MD5('admin123'));
-
--- ============================================
--- END CUSTOMIZATIONS
--- ============================================

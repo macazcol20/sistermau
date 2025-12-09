@@ -2,11 +2,11 @@
 session_start();
 require_once 'utility/connection.php';
 
-// Fetch categories (columns: id, category, status)
+// Fetch categories with images
 $cat_query = "SELECT * FROM categories WHERE status = 1 ORDER BY id ASC";
 $cat_result = mysqli_query($con, $cat_query);
 
-// Fetch products (columns: id, product_name, price, img1, status)
+// Fetch products
 $product_query = "SELECT * FROM product WHERE status = 1 ORDER BY id DESC LIMIT 12";
 $product_result = mysqli_query($con, $product_query);
 ?>
@@ -27,10 +27,28 @@ $product_result = mysqli_query($con, $product_query);
         .hero-static p{font-size:18px;opacity:.9}
         .category-section{max-width:1400px;margin:50px auto;padding:0 20px}
         .section-title{font-size:32px;margin-bottom:30px;color:#333}
-        .category-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:25px;margin-bottom:60px}
-        .category-card{background:#fff;border:2px solid #e0e0e0;border-radius:12px;padding:40px 30px;text-align:center;text-decoration:none;color:#333;transition:all .3s}
-        .category-card:hover{border-color:var(--primary-blue);transform:translateY(-5px);box-shadow:0 8px 20px rgba(0,70,190,.15)}
-        .category-icon{width:80px;height:80px;margin:0 auto 20px;background:linear-gradient(135deg,var(--primary-blue),var(--dark-blue));border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:35px;color:#fff}
+        
+        /* Category Grid with REAL IMAGES (Best Buy style) */
+        .category-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:20px;margin-bottom:60px}
+        .category-card{
+            background:#fff;border:1px solid #e0e0e0;border-radius:8px;
+            padding:20px;text-align:center;text-decoration:none;
+            color:#333;transition:all .3s;overflow:hidden;
+            position:relative;
+        }
+        .category-card:hover{border-color:var(--primary-blue);transform:translateY(-3px);box-shadow:0 4px 12px rgba(0,70,190,.15)}
+        
+        /* Category Image (like Best Buy) */
+        .category-image{
+            width:100%;height:180px;margin-bottom:15px;
+            display:flex;align-items:center;justify-content:center;
+            background:#f5f5f5;border-radius:8px;overflow:hidden;
+        }
+        .category-image img{max-width:100%;max-height:100%;object-fit:contain}
+        
+        .category-name{font-size:16px;font-weight:600;color:#1d252c}
+        
+        /* Product Grid */
         .products-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:25px;margin-top:30px}
         .product-card{background:#fff;border:1px solid #e0e0e0;border-radius:8px;overflow:hidden;transition:all .3s;text-decoration:none;color:#333;display:block}
         .product-card:hover{box-shadow:0 8px 20px rgba(0,0,0,.12);transform:translateY(-3px)}
@@ -54,7 +72,7 @@ $product_result = mysqli_query($con, $product_query);
 <?php include 'require/top.php'; ?>
 
 <div class="hero-static">
-    <h1>Welcome to Sister Mau</h1>
+    <h1>Shop deals by category</h1>
     <p>Electronics, Furniture & Building Equipment - All in One Place</p>
 </div>
 
@@ -64,12 +82,15 @@ $product_result = mysqli_query($con, $product_query);
         <?php 
         if ($cat_result && mysqli_num_rows($cat_result) > 0) {
             while($category = mysqli_fetch_assoc($cat_result)): 
+                $image = !empty($category['image']) ? $category['image'] : 'img-1.jpg';
         ?>
             <a href="view.php?category=<?php echo $category['id']; ?>" class="category-card">
-                <div class="category-icon">
-                    <i class="fas fa-box"></i>
+                <div class="category-image">
+                    <img src="media/categories/<?php echo htmlspecialchars($image); ?>" 
+                         alt="<?php echo htmlspecialchars($category['category']); ?>"
+                         onerror="this.src='assets/images/sample/img-1.jpg'">
                 </div>
-                <h3><?php echo htmlspecialchars($category['category']); ?></h3>
+                <div class="category-name"><?php echo htmlspecialchars($category['category']); ?></div>
             </a>
         <?php 
             endwhile;
