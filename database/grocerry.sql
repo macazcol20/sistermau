@@ -1,348 +1,706 @@
--- phpMyAdmin SQL Dump
--- version 5.1.1
--- https://www.phpmyadmin.net/
+-- MySQL dump 10.13  Distrib 9.5.0, for Linux (x86_64)
 --
--- Host: 127.0.0.1
--- Generation Time: Jul 01, 2022 at 09:50 AM
--- Server version: 10.4.22-MariaDB
--- PHP Version: 8.0.13
-SET
-  SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+-- Host: localhost    Database: grocerry
+-- ------------------------------------------------------
+-- Server version	9.5.0
 
-START TRANSACTION;
-
-SET
-  time_zone = "+00:00";
-
-/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */
-;
-
-/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */
-;
-
-/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */
-;
-
-/*!40101 SET NAMES utf8mb4 */
-;
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!50503 SET NAMES utf8mb4 */;
+/*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
+/*!40103 SET TIME_ZONE='+00:00' */;
+/*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
+/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
+/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
+/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
+SET @MYSQLDUMP_TEMP_LOG_BIN = @@SESSION.SQL_LOG_BIN;
+SET @@SESSION.SQL_LOG_BIN= 0;
 
 --
--- Database: `grocerry`
+-- GTID state at the beginning of the backup 
 --
-CREATE DATABASE grocerry;
 
-USE grocerry;
+SET @@GLOBAL.GTID_PURGED=/*!80000 '+'*/ 'baa42069-d4ab-11f0-b5a9-8665dbf97e4e:1-139';
 
--- --------------------------------------------------------
 --
 -- Table structure for table `admin`
 --
+
+DROP TABLE IF EXISTS `admin`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `admin` (
-  `id` int(11) NOT NULL,
+  `id` int NOT NULL AUTO_INCREMENT,
   `username` varchar(255) NOT NULL,
-  `password` text NOT NULL
-) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4;
+  `password` text NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
 
 --
 -- Dumping data for table `admin`
 --
-INSERT INTO
-  `admin` (`id`, `username`, `password`)
-VALUES
-  (
-    1,
-    'admin@gmail.com',
-    '$2y$10$rmBnmFdpbtw4DatgAogaf.uAJp.EYQs8koJ.I7ThwspQw7SVYo3ce'
-  );
 
--- --------------------------------------------------------
+LOCK TABLES `admin` WRITE;
+/*!40000 ALTER TABLE `admin` DISABLE KEYS */;
+INSERT INTO `admin` VALUES (2,'admin','0192023a7bbd73250516f069df18b500');
+/*!40000 ALTER TABLE `admin` ENABLE KEYS */;
+UNLOCK TABLES;
+
 --
 -- Table structure for table `assigned_orders`
 --
-CREATE TABLE `assigned_orders` (
-  `id` int(11) NOT NULL,
-  `od_id` int(11) NOT NULL,
-  `dv_id` int(11) NOT NULL
-) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4;
 
--- --------------------------------------------------------
+DROP TABLE IF EXISTS `assigned_orders`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `assigned_orders` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `od_id` int NOT NULL,
+  `dv_id` int NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `assigned_orders`
+--
+
+LOCK TABLES `assigned_orders` WRITE;
+/*!40000 ALTER TABLE `assigned_orders` DISABLE KEYS */;
+/*!40000 ALTER TABLE `assigned_orders` ENABLE KEYS */;
+UNLOCK TABLES;
+
 --
 -- Table structure for table `business_type`
 --
-CREATE TABLE `business_type` (
-  `id` int(11) NOT NULL,
-  `type` varchar(255) NOT NULL
-) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4;
 
--- --------------------------------------------------------
+DROP TABLE IF EXISTS `business_type`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `business_type` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `type` varchar(255) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `business_type`
+--
+
+LOCK TABLES `business_type` WRITE;
+/*!40000 ALTER TABLE `business_type` DISABLE KEYS */;
+/*!40000 ALTER TABLE `business_type` ENABLE KEYS */;
+UNLOCK TABLES;
+
 --
 -- Table structure for table `cart`
 --
-CREATE TABLE `cart` (
-  `id` int(11) NOT NULL,
-  `u_id` int(11) NOT NULL,
-  `total` float DEFAULT 0,
-  `is_applied` tinyint(1) DEFAULT 0,
-  `promo` float DEFAULT 0,
-  `is_add_w` tinyint(1) DEFAULT 0,
-  `wl_amt` float DEFAULT 0,
-  `final_amt` float DEFAULT 0,
-  `ship_fee` tinyint(1) DEFAULT 0,
-  `belonging_city` int(11) DEFAULT 0
-) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4;
 
--- --------------------------------------------------------
+DROP TABLE IF EXISTS `cart`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `cart` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `u_id` int NOT NULL,
+  `total` float DEFAULT '0',
+  `is_applied` tinyint(1) DEFAULT '0',
+  `promo` float DEFAULT '0',
+  `is_add_w` tinyint(1) DEFAULT '0',
+  `wl_amt` float DEFAULT '0',
+  `final_amt` float DEFAULT '0',
+  `ship_fee` tinyint(1) DEFAULT '0',
+  `belonging_city` int DEFAULT '0',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `cart`
+--
+
+LOCK TABLES `cart` WRITE;
+/*!40000 ALTER TABLE `cart` DISABLE KEYS */;
+/*!40000 ALTER TABLE `cart` ENABLE KEYS */;
+UNLOCK TABLES;
+
 --
 -- Table structure for table `cart_detail`
 --
-CREATE TABLE `cart_detail` (
-  `id` int(11) NOT NULL,
-  `cart_id` int(11) NOT NULL,
-  `p_id` int(11) NOT NULL,
-  `qty` int(11) NOT NULL
-) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4;
 
--- --------------------------------------------------------
+DROP TABLE IF EXISTS `cart_detail`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `cart_detail` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `cart_id` int NOT NULL,
+  `p_id` int NOT NULL,
+  `qty` int NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `cart_detail`
+--
+
+LOCK TABLES `cart_detail` WRITE;
+/*!40000 ALTER TABLE `cart_detail` DISABLE KEYS */;
+/*!40000 ALTER TABLE `cart_detail` ENABLE KEYS */;
+UNLOCK TABLES;
+
 --
 -- Table structure for table `categories`
 --
-CREATE TABLE `categories` (
-  `id` int(11) NOT NULL,
-  `category` varchar(255) NOT NULL,
-  `status` tinyint(1) NOT NULL
-) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4;
 
--- --------------------------------------------------------
+DROP TABLE IF EXISTS `categories`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `categories` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `category` varchar(255) NOT NULL,
+  `image` varchar(255) DEFAULT NULL,
+  `status` tinyint(1) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `categories`
+--
+
+LOCK TABLES `categories` WRITE;
+/*!40000 ALTER TABLE `categories` DISABLE KEYS */;
+INSERT INTO `categories` VALUES (1,'TVs','samsung-tv.jpg',1),(2,'Surround Sounds','soundbar.jpg',1),(3,'Furniture','furniture.jpg',1),(4,'Cars','car.jpg',1),(5,'Laptops','laptop.jpg',1);
+/*!40000 ALTER TABLE `categories` ENABLE KEYS */;
+UNLOCK TABLES;
+
 --
 -- Table structure for table `city`
 --
-CREATE TABLE `city` (
-  `id` int(11) NOT NULL,
-  `s_id` int(11) NOT NULL,
-  `c_id` int(11) NOT NULL,
-  `city_name` varchar(255) NOT NULL
-) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4;
 
--- ---------------------------------------------------------
+DROP TABLE IF EXISTS `city`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `city` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `s_id` int NOT NULL,
+  `c_id` int NOT NULL,
+  `city_name` varchar(255) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `city`
+--
+
+LOCK TABLES `city` WRITE;
+/*!40000 ALTER TABLE `city` DISABLE KEYS */;
+/*!40000 ALTER TABLE `city` ENABLE KEYS */;
+UNLOCK TABLES;
+
 --
 -- Table structure for table `cnfrm_delivery`
 --
-CREATE TABLE `cnfrm_delivery` (
-  `id` int(11) NOT NULL,
-  `od_id` int(11) NOT NULL,
-  `dv_id` int(11) NOT NULL
-) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4;
 
--- --------------------------------------------------------
+DROP TABLE IF EXISTS `cnfrm_delivery`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `cnfrm_delivery` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `od_id` int NOT NULL,
+  `dv_id` int NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `cnfrm_delivery`
+--
+
+LOCK TABLES `cnfrm_delivery` WRITE;
+/*!40000 ALTER TABLE `cnfrm_delivery` DISABLE KEYS */;
+/*!40000 ALTER TABLE `cnfrm_delivery` ENABLE KEYS */;
+UNLOCK TABLES;
+
 --
 -- Table structure for table `cnfrm_undelivery`
 --
-CREATE TABLE `cnfrm_undelivery` (
-  `id` int(11) NOT NULL,
-  `od_id` int(11) NOT NULL,
-  `dv_id` int(11) NOT NULL
-) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4;
 
--- --------------------------------------------------------
+DROP TABLE IF EXISTS `cnfrm_undelivery`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `cnfrm_undelivery` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `od_id` int NOT NULL,
+  `dv_id` int NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `cnfrm_undelivery`
+--
+
+LOCK TABLES `cnfrm_undelivery` WRITE;
+/*!40000 ALTER TABLE `cnfrm_undelivery` DISABLE KEYS */;
+/*!40000 ALTER TABLE `cnfrm_undelivery` ENABLE KEYS */;
+UNLOCK TABLES;
+
 --
 -- Table structure for table `commission`
 --
-CREATE TABLE `commission` (
-  `id` int(11) NOT NULL,
-  `scat_id` int(11) NOT NULL,
-  `com` float NOT NULL
-) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4;
 
--- --------------------------------------------------------
+DROP TABLE IF EXISTS `commission`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `commission` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `scat_id` int NOT NULL,
+  `com` float NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `commission`
+--
+
+LOCK TABLES `commission` WRITE;
+/*!40000 ALTER TABLE `commission` DISABLE KEYS */;
+/*!40000 ALTER TABLE `commission` ENABLE KEYS */;
+UNLOCK TABLES;
+
 --
 -- Table structure for table `country`
 --
-CREATE TABLE `country` (
-  `id` int(11) NOT NULL,
-  `cntry_name` varchar(255) NOT NULL
-) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4;
 
--- --------------------------------------------------------
+DROP TABLE IF EXISTS `country`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `country` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `cntry_name` varchar(255) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `country`
+--
+
+LOCK TABLES `country` WRITE;
+/*!40000 ALTER TABLE `country` DISABLE KEYS */;
+/*!40000 ALTER TABLE `country` ENABLE KEYS */;
+UNLOCK TABLES;
+
 --
 -- Table structure for table `dc`
 --
-CREATE TABLE `dc` (
-  `id` int(11) NOT NULL,
-  `dc` float NOT NULL,
-  `pc` float NOT NULL
-) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4;
 
--- --------------------------------------------------------
+DROP TABLE IF EXISTS `dc`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `dc` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `dc` float NOT NULL,
+  `pc` float NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
 --
 -- Dumping data for table `dc`
 --
-INSERT INTO
-  `dc` (`id`,`dc`, `pc`)
-VALUES
-  (1,0, 0);
+
+LOCK TABLES `dc` WRITE;
+/*!40000 ALTER TABLE `dc` DISABLE KEYS */;
+INSERT INTO `dc` VALUES (1,0,0);
+/*!40000 ALTER TABLE `dc` ENABLE KEYS */;
+UNLOCK TABLES;
 
 --
 -- Table structure for table `delivery_boy`
 --
+
+DROP TABLE IF EXISTS `delivery_boy`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `delivery_boy` (
-  `id` int(11) NOT NULL,
+  `id` int NOT NULL AUTO_INCREMENT,
   `dv_name` varchar(255) NOT NULL,
   `dv_username` varchar(255) NOT NULL,
   `dv_password` text NOT NULL,
   `dv_email` varchar(255) NOT NULL,
-  `dv_mobile` varchar(255) NOT NULL
-) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4;
+  `dv_mobile` varchar(255) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
 
--- --------------------------------------------------------
+--
+-- Dumping data for table `delivery_boy`
+--
+
+LOCK TABLES `delivery_boy` WRITE;
+/*!40000 ALTER TABLE `delivery_boy` DISABLE KEYS */;
+/*!40000 ALTER TABLE `delivery_boy` ENABLE KEYS */;
+UNLOCK TABLES;
+
 --
 -- Table structure for table `dv_time`
 --
-CREATE TABLE `dv_time` (
-  `id` int(11) NOT NULL,
-  `from` varchar(100) NOT NULL,
-  `tto` varchar(100) NOT NULL
-) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4;
 
--- --------------------------------------------------------
+DROP TABLE IF EXISTS `dv_time`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `dv_time` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `from` varchar(100) NOT NULL,
+  `tto` varchar(100) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `dv_time`
+--
+
+LOCK TABLES `dv_time` WRITE;
+/*!40000 ALTER TABLE `dv_time` DISABLE KEYS */;
+/*!40000 ALTER TABLE `dv_time` ENABLE KEYS */;
+UNLOCK TABLES;
+
 --
 -- Table structure for table `filter`
 --
-CREATE TABLE `filter` (
-  `id` int(11) NOT NULL,
-  `subcat_id` int(11) NOT NULL,
-  `filter` varchar(255) NOT NULL
-) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4;
 
--- --------------------------------------------------------
+DROP TABLE IF EXISTS `filter`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `filter` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `subcat_id` int NOT NULL,
+  `filter` varchar(255) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `filter`
+--
+
+LOCK TABLES `filter` WRITE;
+/*!40000 ALTER TABLE `filter` DISABLE KEYS */;
+/*!40000 ALTER TABLE `filter` ENABLE KEYS */;
+UNLOCK TABLES;
+
 --
 -- Table structure for table `isue`
 --
-CREATE TABLE `isue` (
-  `id` int(11) NOT NULL,
-  `oid` int(11) NOT NULL
-) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4;
 
--- --------------------------------------------------------
+DROP TABLE IF EXISTS `isue`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `isue` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `oid` int NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `isue`
+--
+
+LOCK TABLES `isue` WRITE;
+/*!40000 ALTER TABLE `isue` DISABLE KEYS */;
+/*!40000 ALTER TABLE `isue` ENABLE KEYS */;
+UNLOCK TABLES;
+
 --
 -- Table structure for table `ofd`
 --
+
+DROP TABLE IF EXISTS `ofd`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `ofd` (
-  `id` int(11) NOT NULL,
-  `od_id` int(11) NOT NULL,
-  `dv_id` int(11) NOT NULL
-) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4;
+  `id` int NOT NULL AUTO_INCREMENT,
+  `od_id` int NOT NULL,
+  `dv_id` int NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
 
--- --------------------------------------------------------
 --
--- Table structure for table `orders`
+-- Dumping data for table `ofd`
 --
-CREATE TABLE `orders` (
-  `id` int(11) NOT NULL,
-  `o_id` text NOT NULL,
-  `u_id` int(11) NOT NULL,
-  `ad_id` int(11) DEFAULT 0,
-  `dv_date` varchar(255) DEFAULT '',
-  `dv_time` varchar(255) DEFAULT '',
-  `payment_type` int(11) DEFAULT 0,
-  `payment_status` int(11) DEFAULT 0,
-  `order_status` int(11) DEFAULT 0,
-  `mihpayid` varchar(255) DEFAULT '',
-  `txnid` varchar(255) DEFAULT '',
-  `payu_status` varchar(255) DEFAULT '',
-  `total_amt` float DEFAULT 0,
-  `ship_fee_order` float DEFAULT 0,
-  `final_val` float DEFAULT 0,
-  `isnew` int(11) DEFAULT 0,
-  `delivered_by` int(11) DEFAULT 0,
-  `u_cnfrm` int(11) DEFAULT 0,
-  `ptu` int(11) DEFAULT 0,
-  `udvc` int(11) DEFAULT 0,
-  `is_p_app` int(11) DEFAULT 0,
-  `is_w_ap` int(11) DEFAULT 0,
-  `prmo` float DEFAULT 0,
-  `wlmt` float DEFAULT 0
-) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4;
 
--- --------------------------------------------------------
+LOCK TABLES `ofd` WRITE;
+/*!40000 ALTER TABLE `ofd` DISABLE KEYS */;
+/*!40000 ALTER TABLE `ofd` ENABLE KEYS */;
+UNLOCK TABLES;
+
 --
 -- Table structure for table `order_detail`
 --
-CREATE TABLE `order_detail` (
-  `id` int(11) NOT NULL,
-  `oid` int(11) NOT NULL,
-  `p_id` int(11) NOT NULL,
-  `qty` int(11) NOT NULL,
-  `hover` int(11) DEFAULT 0,
-  `rcvd` int(11) DEFAULT 0,
-  `delivered_qty` int(100) DEFAULT 0
-) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4;
 
--- --------------------------------------------------------
+DROP TABLE IF EXISTS `order_detail`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `order_detail` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `oid` int NOT NULL,
+  `p_id` int NOT NULL,
+  `qty` int NOT NULL,
+  `hover` int DEFAULT '0',
+  `rcvd` int DEFAULT '0',
+  `delivered_qty` int DEFAULT '0',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `order_detail`
+--
+
+LOCK TABLES `order_detail` WRITE;
+/*!40000 ALTER TABLE `order_detail` DISABLE KEYS */;
+/*!40000 ALTER TABLE `order_detail` ENABLE KEYS */;
+UNLOCK TABLES;
+
 --
 -- Table structure for table `order_status`
 --
+
+DROP TABLE IF EXISTS `order_status`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `order_status` (
-  `id` int(11) NOT NULL,
-  `o_status` varchar(255) NOT NULL
-) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4;
+  `id` int NOT NULL AUTO_INCREMENT,
+  `o_status` varchar(255) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
 
 --
 -- Dumping data for table `order_status`
 --
-INSERT INTO
-  `order_status` (`id`, `o_status`)
-VALUES
-  (1, 'Placing'),
-  (2, 'Placed'),
-  (3, 'Assigned'),
-  (4, 'Out for delivery'),
-  (5, 'Delivered'),
-  (6, 'Undelivered'),
-  (7, 'Issue');
 
--- --------------------------------------------------------
+LOCK TABLES `order_status` WRITE;
+/*!40000 ALTER TABLE `order_status` DISABLE KEYS */;
+INSERT INTO `order_status` VALUES (1,'Placing'),(2,'Placed'),(3,'Assigned'),(4,'Out for delivery'),(5,'Delivered'),(6,'Undelivered'),(7,'Issue');
+/*!40000 ALTER TABLE `order_status` ENABLE KEYS */;
+UNLOCK TABLES;
+
 --
 -- Table structure for table `order_stlmnt`
 --
-CREATE TABLE `order_stlmnt` (
-  `id` int(11) NOT NULL,
-  `oid` int(11) NOT NULL,
-  `sid` int(11) NOT NULL,
-  `val` float DEFAULT 0,
-  `sc` float DEFAULT 0
-) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4;
 
--- --------------------------------------------------------
+DROP TABLE IF EXISTS `order_stlmnt`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `order_stlmnt` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `oid` int NOT NULL,
+  `sid` int NOT NULL,
+  `val` float DEFAULT '0',
+  `sc` float DEFAULT '0',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `order_stlmnt`
+--
+
+LOCK TABLES `order_stlmnt` WRITE;
+/*!40000 ALTER TABLE `order_stlmnt` DISABLE KEYS */;
+/*!40000 ALTER TABLE `order_stlmnt` ENABLE KEYS */;
+UNLOCK TABLES;
+
 --
 -- Table structure for table `order_time`
 --
-CREATE TABLE `order_time` (
-  `id` int(11) NOT NULL,
-  `oid` int(11) NOT NULL,
-  `o_status` int(11) NOT NULL,
-  `added_on` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
-) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4;
 
--- --------------------------------------------------------
+DROP TABLE IF EXISTS `order_time`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `order_time` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `oid` int NOT NULL,
+  `o_status` int NOT NULL,
+  `added_on` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `order_time`
+--
+
+LOCK TABLES `order_time` WRITE;
+/*!40000 ALTER TABLE `order_time` DISABLE KEYS */;
+/*!40000 ALTER TABLE `order_time` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `orders`
+--
+
+DROP TABLE IF EXISTS `orders`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `orders` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `o_id` text NOT NULL,
+  `u_id` int NOT NULL,
+  `ad_id` int DEFAULT '0',
+  `dv_date` varchar(255) DEFAULT '',
+  `dv_time` varchar(255) DEFAULT '',
+  `payment_type` int DEFAULT '0',
+  `payment_status` int DEFAULT '0',
+  `order_status` int DEFAULT '0',
+  `mihpayid` varchar(255) DEFAULT '',
+  `txnid` varchar(255) DEFAULT '',
+  `payu_status` varchar(255) DEFAULT '',
+  `total_amt` float DEFAULT '0',
+  `ship_fee_order` float DEFAULT '0',
+  `final_val` float DEFAULT '0',
+  `isnew` int DEFAULT '0',
+  `delivered_by` int DEFAULT '0',
+  `u_cnfrm` int DEFAULT '0',
+  `ptu` int DEFAULT '0',
+  `udvc` int DEFAULT '0',
+  `is_p_app` int DEFAULT '0',
+  `is_w_ap` int DEFAULT '0',
+  `prmo` float DEFAULT '0',
+  `wlmt` float DEFAULT '0',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `orders`
+--
+
+LOCK TABLES `orders` WRITE;
+/*!40000 ALTER TABLE `orders` DISABLE KEYS */;
+/*!40000 ALTER TABLE `orders` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `p_filter`
+--
+
+DROP TABLE IF EXISTS `p_filter`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `p_filter` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `pid` int NOT NULL,
+  `fid` int NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `p_filter`
+--
+
+LOCK TABLES `p_filter` WRITE;
+/*!40000 ALTER TABLE `p_filter` DISABLE KEYS */;
+/*!40000 ALTER TABLE `p_filter` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `p_reject`
+--
+
+DROP TABLE IF EXISTS `p_reject`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `p_reject` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `product_id` int NOT NULL,
+  `cause` text NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `p_reject`
+--
+
+LOCK TABLES `p_reject` WRITE;
+/*!40000 ALTER TABLE `p_reject` DISABLE KEYS */;
+/*!40000 ALTER TABLE `p_reject` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `p_sfilter`
+--
+
+DROP TABLE IF EXISTS `p_sfilter`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `p_sfilter` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `pid` int NOT NULL,
+  `sfid` int NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `p_sfilter`
+--
+
+LOCK TABLES `p_sfilter` WRITE;
+/*!40000 ALTER TABLE `p_sfilter` DISABLE KEYS */;
+/*!40000 ALTER TABLE `p_sfilter` ENABLE KEYS */;
+UNLOCK TABLES;
+
 --
 -- Table structure for table `pin`
 --
-CREATE TABLE `pin` (
-  `id` int(11) NOT NULL,
-  `c_id` int(11) NOT NULL,
-  `s_id` int(11) NOT NULL,
-  `cn_id` int(11) NOT NULL,
-  `pincode` varchar(255) NOT NULL
-) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4;
 
--- --------------------------------------------------------
+DROP TABLE IF EXISTS `pin`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `pin` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `c_id` int NOT NULL,
+  `s_id` int NOT NULL,
+  `cn_id` int NOT NULL,
+  `pincode` varchar(255) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `pin`
+--
+
+LOCK TABLES `pin` WRITE;
+/*!40000 ALTER TABLE `pin` DISABLE KEYS */;
+/*!40000 ALTER TABLE `pin` ENABLE KEYS */;
+UNLOCK TABLES;
+
 --
 -- Table structure for table `product`
 --
+
+DROP TABLE IF EXISTS `product`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `product` (
-  `id` int(11) NOT NULL,
-  `cat_id` int(11) NOT NULL,
-  `scat_id` int(11) NOT NULL,
+  `id` int NOT NULL AUTO_INCREMENT,
+  `cat_id` int NOT NULL,
+  `scat_id` int NOT NULL,
   `product_name` varchar(255) NOT NULL,
   `img1` varchar(255) NOT NULL,
   `img2` varchar(255) NOT NULL,
@@ -353,100 +711,178 @@ CREATE TABLE `product` (
   `fa` float NOT NULL,
   `shrt_desc` text NOT NULL,
   `description` text NOT NULL,
-  `qty` int(11) NOT NULL,
+  `qty` int NOT NULL,
   `disclaimer` text NOT NULL,
-  `isappp` int(11) NOT NULL,
+  `isappp` int NOT NULL,
   `isnew` tinyint(1) NOT NULL,
   `bs` tinyint(1) NOT NULL,
   `status` tinyint(1) NOT NULL,
-  `added_by` int(11) NOT NULL,
-  `belonging_city` int(11) NOT NULL,
+  `added_by` int NOT NULL,
+  `belonging_city` int NOT NULL,
   `tax` float NOT NULL,
-  `sku` varchar(255) NOT NULL
-) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4;
+  `sku` varchar(255) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
 
--- --------------------------------------------------------
+--
+-- Dumping data for table `product`
+--
+
+LOCK TABLES `product` WRITE;
+/*!40000 ALTER TABLE `product` DISABLE KEYS */;
+/*!40000 ALTER TABLE `product` ENABLE KEYS */;
+UNLOCK TABLES;
+
 --
 -- Table structure for table `product_ad_on`
 --
-CREATE TABLE `product_ad_on` (
-  `id` int(11) NOT NULL,
-  `pid` int(11) NOT NULL,
-  `added_on` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
-) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4;
 
--- --------------------------------------------------------
+DROP TABLE IF EXISTS `product_ad_on`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `product_ad_on` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `pid` int NOT NULL,
+  `added_on` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `product_ad_on`
+--
+
+LOCK TABLES `product_ad_on` WRITE;
+/*!40000 ALTER TABLE `product_ad_on` DISABLE KEYS */;
+/*!40000 ALTER TABLE `product_ad_on` ENABLE KEYS */;
+UNLOCK TABLES;
+
 --
 -- Table structure for table `promo`
 --
+
+DROP TABLE IF EXISTS `promo`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `promo` (
-  `id` int(11) NOT NULL,
+  `id` int NOT NULL AUTO_INCREMENT,
   `code` varchar(60) NOT NULL,
   `dis` float NOT NULL,
   `minbal` float NOT NULL,
-  `scat` int(11) NOT NULL,
-  `adb` int(11) NOT NULL
-) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4;
+  `scat` int NOT NULL,
+  `adb` int NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
 
--- --------------------------------------------------------
 --
--- Table structure for table `p_filter`
+-- Dumping data for table `promo`
 --
-CREATE TABLE `p_filter` (
-  `id` int(11) NOT NULL,
-  `pid` int(11) NOT NULL,
-  `fid` int(11) NOT NULL
-) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4;
 
--- --------------------------------------------------------
---
--- Table structure for table `p_reject`
---
-CREATE TABLE `p_reject` (
-  `id` int(11) NOT NULL,
-  `product_id` int(11) NOT NULL,
-  `cause` text NOT NULL
-) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4;
+LOCK TABLES `promo` WRITE;
+/*!40000 ALTER TABLE `promo` DISABLE KEYS */;
+/*!40000 ALTER TABLE `promo` ENABLE KEYS */;
+UNLOCK TABLES;
 
--- --------------------------------------------------------
---
--- Table structure for table `p_sfilter`
---
-CREATE TABLE `p_sfilter` (
-  `id` int(11) NOT NULL,
-  `pid` int(11) NOT NULL,
-  `sfid` int(11) NOT NULL
-) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4;
-
--- --------------------------------------------------------
 --
 -- Table structure for table `rejection`
 --
-CREATE TABLE `rejection` (
-  `id` int(11) NOT NULL,
-  `s_id` int(11) NOT NULL,
-  `reason` text NOT NULL
-) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4;
 
--- --------------------------------------------------------
+DROP TABLE IF EXISTS `rejection`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `rejection` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `s_id` int NOT NULL,
+  `reason` text NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `rejection`
+--
+
+LOCK TABLES `rejection` WRITE;
+/*!40000 ALTER TABLE `rejection` DISABLE KEYS */;
+/*!40000 ALTER TABLE `rejection` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `seller_w_msg`
+--
+
+DROP TABLE IF EXISTS `seller_w_msg`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `seller_w_msg` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `s_id` int NOT NULL,
+  `cod` tinyint(1) NOT NULL,
+  `msg` text NOT NULL,
+  `balance` float NOT NULL,
+  `added_on` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `is_new` tinyint(1) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `seller_w_msg`
+--
+
+LOCK TABLES `seller_w_msg` WRITE;
+/*!40000 ALTER TABLE `seller_w_msg` DISABLE KEYS */;
+/*!40000 ALTER TABLE `seller_w_msg` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `seller_wallet`
+--
+
+DROP TABLE IF EXISTS `seller_wallet`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `seller_wallet` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `seller_id` int NOT NULL,
+  `ballance` float NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `seller_wallet`
+--
+
+LOCK TABLES `seller_wallet` WRITE;
+/*!40000 ALTER TABLE `seller_wallet` DISABLE KEYS */;
+/*!40000 ALTER TABLE `seller_wallet` ENABLE KEYS */;
+UNLOCK TABLES;
+
 --
 -- Table structure for table `sellers`
 --
+
+DROP TABLE IF EXISTS `sellers`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `sellers` (
-  `id` int(11) NOT NULL,
+  `id` int NOT NULL AUTO_INCREMENT,
   `email` varchar(255) DEFAULT '',
   `password` text NOT NULL,
   `mobile` varchar(50) DEFAULT '',
   `f_name` varchar(255) DEFAULT '',
   `address` varchar(255) DEFAULT '',
-  `tob` int(11) DEFAULT 0,
-  `country` int(11) DEFAULT 0,
-  `state` int(11) DEFAULT 0,
-  `city` int(11) DEFAULT 0,
-  `pin` int(11) DEFAULT 0,
+  `tob` int DEFAULT '0',
+  `country` int DEFAULT '0',
+  `state` int DEFAULT '0',
+  `city` int DEFAULT '0',
+  `pin` int DEFAULT '0',
   `b_name` varchar(255) DEFAULT '',
   `b_crft` varchar(255) DEFAULT '',
-  `is_gst` tinyint(1) DEFAULT 0,
+  `is_gst` tinyint(1) DEFAULT '0',
   `gst_id` varchar(255) DEFAULT '',
   `gst_crft` varchar(255) DEFAULT '',
   `acc_num` varchar(255) DEFAULT '',
@@ -454,868 +890,267 @@ CREATE TABLE `sellers` (
   `ifsc` varchar(255) DEFAULT '',
   `bank` varchar(255) DEFAULT '',
   `branch` varchar(255) DEFAULT '',
-  `isapp` int(11) DEFAULT 0,
+  `isapp` int DEFAULT '0',
   `is_new` tinyint(1) NOT NULL,
-  `is_cp` tinyint(1) DEFAULT 0,
+  `is_cp` tinyint(1) DEFAULT '0',
   `adhar` varchar(255) DEFAULT '',
   `pan` varchar(255) DEFAULT '',
-  `status` tinyint(1) NOT NULL
-) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4;
+  `status` tinyint(1) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
 
--- --------------------------------------------------------
 --
--- Table structure for table `seller_wallet`
+-- Dumping data for table `sellers`
 --
-CREATE TABLE `seller_wallet` (
-  `id` int(11) NOT NULL,
-  `seller_id` int(11) NOT NULL,
-  `ballance` float NOT NULL
-) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4;
 
--- --------------------------------------------------------
---
--- Table structure for table `seller_w_msg`
---
-CREATE TABLE `seller_w_msg` (
-  `id` int(11) NOT NULL,
-  `s_id` int(11) NOT NULL,
-  `cod` tinyint(1) NOT NULL,
-  `msg` text NOT NULL,
-  `balance` float NOT NULL,
-  `added_on` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
-  `is_new` tinyint(1) NOT NULL DEFAULT 0
-) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4;
+LOCK TABLES `sellers` WRITE;
+/*!40000 ALTER TABLE `sellers` DISABLE KEYS */;
+/*!40000 ALTER TABLE `sellers` ENABLE KEYS */;
+UNLOCK TABLES;
 
--- --------------------------------------------------------
 --
 -- Table structure for table `state`
 --
+
+DROP TABLE IF EXISTS `state`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `state` (
-  `id` int(11) NOT NULL,
-  `c_id` int(11) NOT NULL,
-  `state_name` varchar(255) NOT NULL
-) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4;
+  `id` int NOT NULL AUTO_INCREMENT,
+  `c_id` int NOT NULL,
+  `state_name` varchar(255) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
 
--- --------------------------------------------------------
 --
--- Table structure for table `subcategories`
+-- Dumping data for table `state`
 --
-CREATE TABLE `subcategories` (
-  `id` int(11) NOT NULL,
-  `cat_id` int(11) NOT NULL,
-  `subcat` varchar(255) NOT NULL,
-  `status` tinyint(1) NOT NULL
-) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4;
 
--- --------------------------------------------------------
+LOCK TABLES `state` WRITE;
+/*!40000 ALTER TABLE `state` DISABLE KEYS */;
+/*!40000 ALTER TABLE `state` ENABLE KEYS */;
+UNLOCK TABLES;
+
 --
 -- Table structure for table `sub_filter`
 --
+
+DROP TABLE IF EXISTS `sub_filter`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `sub_filter` (
-  `id` int(11) NOT NULL,
-  `filter_id` int(11) NOT NULL,
-  `subfilter` varchar(255) NOT NULL
-) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4;
+  `id` int NOT NULL AUTO_INCREMENT,
+  `filter_id` int NOT NULL,
+  `subfilter` varchar(255) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
 
--- --------------------------------------------------------
 --
--- Table structure for table `users`
+-- Dumping data for table `sub_filter`
 --
-CREATE TABLE `users` (
-  `id` int(11) NOT NULL,
-  `email` varchar(255) DEFAULT '',
-  `password` text DEFAULT '',
-  `mobile` varchar(255) DEFAULT '',
-  `name` varchar(255) DEFAULT '',
-  `m_vfd` tinyint(1) DEFAULT 0,
-  `e_vfd` tinyint(1) DEFAULT 0,
-  `status` tinyint(1) DEFAULT 0
-) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4;
 
--- --------------------------------------------------------
+LOCK TABLES `sub_filter` WRITE;
+/*!40000 ALTER TABLE `sub_filter` DISABLE KEYS */;
+/*!40000 ALTER TABLE `sub_filter` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `subcategories`
+--
+
+DROP TABLE IF EXISTS `subcategories`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `subcategories` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `cat_id` int NOT NULL,
+  `subcat` varchar(255) NOT NULL,
+  `status` tinyint(1) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `subcategories`
+--
+
+LOCK TABLES `subcategories` WRITE;
+/*!40000 ALTER TABLE `subcategories` DISABLE KEYS */;
+/*!40000 ALTER TABLE `subcategories` ENABLE KEYS */;
+UNLOCK TABLES;
+
 --
 -- Table structure for table `user_address`
 --
+
+DROP TABLE IF EXISTS `user_address`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `user_address` (
-  `id` int(11) NOT NULL,
-  `uid` int(11) NOT NULL,
+  `id` int NOT NULL AUTO_INCREMENT,
+  `uid` int NOT NULL,
   `type_ad` varchar(255) NOT NULL,
   `user_name` varchar(255) NOT NULL,
   `user_mobile` varchar(255) NOT NULL,
-  `user_city` int(11) NOT NULL,
+  `user_city` int NOT NULL,
   `user_add` varchar(255) NOT NULL,
   `user_pin` varchar(255) NOT NULL,
-  `user_local` varchar(255) NOT NULL
-) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4;
+  `user_local` varchar(255) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
 
--- --------------------------------------------------------
 --
--- Table structure for table `user_wallet`
+-- Dumping data for table `user_address`
 --
-CREATE TABLE `user_wallet` (
-  `id` int(11) NOT NULL,
-  `user_id` int(11) NOT NULL,
-  `ballance` float NOT NULL
-) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4;
 
--- --------------------------------------------------------
+LOCK TABLES `user_address` WRITE;
+/*!40000 ALTER TABLE `user_address` DISABLE KEYS */;
+/*!40000 ALTER TABLE `user_address` ENABLE KEYS */;
+UNLOCK TABLES;
+
 --
 -- Table structure for table `user_w_msg`
 --
+
+DROP TABLE IF EXISTS `user_w_msg`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `user_w_msg` (
-  `id` int(11) NOT NULL,
-  `u_id` int(11) NOT NULL,
+  `id` int NOT NULL AUTO_INCREMENT,
+  `u_id` int NOT NULL,
   `cod` tinyint(1) NOT NULL,
   `msg` text NOT NULL,
   `balance` float NOT NULL,
-  `added_on` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
-  `is_new` tinyint(1) NOT NULL
-) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4;
+  `added_on` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `is_new` tinyint(1) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
 
--- --------------------------------------------------------
+--
+-- Dumping data for table `user_w_msg`
+--
+
+LOCK TABLES `user_w_msg` WRITE;
+/*!40000 ALTER TABLE `user_w_msg` DISABLE KEYS */;
+/*!40000 ALTER TABLE `user_w_msg` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `user_wallet`
+--
+
+DROP TABLE IF EXISTS `user_wallet`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `user_wallet` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `user_id` int NOT NULL,
+  `ballance` float NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `user_wallet`
+--
+
+LOCK TABLES `user_wallet` WRITE;
+/*!40000 ALTER TABLE `user_wallet` DISABLE KEYS */;
+/*!40000 ALTER TABLE `user_wallet` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `users`
+--
+
+DROP TABLE IF EXISTS `users`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `users` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `email` varchar(255) DEFAULT '',
+  `password` text,
+  `mobile` varchar(255) DEFAULT '',
+  `name` varchar(255) DEFAULT '',
+  `m_vfd` tinyint(1) DEFAULT '0',
+  `e_vfd` tinyint(1) DEFAULT '0',
+  `status` tinyint(1) DEFAULT '0',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `users`
+--
+
+LOCK TABLES `users` WRITE;
+/*!40000 ALTER TABLE `users` DISABLE KEYS */;
+/*!40000 ALTER TABLE `users` ENABLE KEYS */;
+UNLOCK TABLES;
+
 --
 -- Table structure for table `wishlist`
 --
-CREATE TABLE `wishlist` (
-  `id` int(11) NOT NULL,
-  `u_id` int(11) NOT NULL,
-  `p_id` int(11) NOT NULL
-) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4;
 
--- --------------------------------------------------------
+DROP TABLE IF EXISTS `wishlist`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `wishlist` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `u_id` int NOT NULL,
+  `p_id` int NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `wishlist`
+--
+
+LOCK TABLES `wishlist` WRITE;
+/*!40000 ALTER TABLE `wishlist` DISABLE KEYS */;
+/*!40000 ALTER TABLE `wishlist` ENABLE KEYS */;
+UNLOCK TABLES;
+
 --
 -- Table structure for table `witdraw_req`
 --
+
+DROP TABLE IF EXISTS `witdraw_req`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `witdraw_req` (
-  `id` int(11) NOT NULL,
-  `s_id` int(11) NOT NULL,
+  `id` int NOT NULL AUTO_INCREMENT,
+  `s_id` int NOT NULL,
   `amount_w` float NOT NULL,
   `amount_r` float NOT NULL,
-  `isnew` int(11) NOT NULL DEFAULT 0
-) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4;
-
---
--- Indexes for dumped tables
---
---
--- Indexes for table `admin`
---
-ALTER TABLE
-  `admin`
-ADD
-  PRIMARY KEY (`id`);
-
---
--- Indexes for table `assigned_orders`
---
-ALTER TABLE
-  `assigned_orders`
-ADD
-  PRIMARY KEY (`id`);
-
---
--- Indexes for table `business_type`
---
-ALTER TABLE
-  `business_type`
-ADD
-  PRIMARY KEY (`id`);
-
---
--- Indexes for table `cart`
---
-ALTER TABLE
-  `cart`
-ADD
-  PRIMARY KEY (`id`);
-
---
--- Indexes for table `cart_detail`
---
-ALTER TABLE
-  `cart_detail`
-ADD
-  PRIMARY KEY (`id`);
-
---
--- Indexes for table `categories`
---
-ALTER TABLE
-  `categories`
-ADD
-  PRIMARY KEY (`id`);
-
---
--- Indexes for table `city`
---
-ALTER TABLE
-  `city`
-ADD
-  PRIMARY KEY (`id`);
-
---
--- Indexes for table `cnfrm_delivery`
---
-ALTER TABLE
-  `cnfrm_delivery`
-ADD
-  PRIMARY KEY (`id`);
-
---
--- Indexes for table `cnfrm_undelivery`
---
-ALTER TABLE
-  `cnfrm_undelivery`
-ADD
-  PRIMARY KEY (`id`);
-
---
--- Indexes for table `commission`
---
-ALTER TABLE
-  `commission`
-ADD
-  PRIMARY KEY (`id`);
-
---
--- Indexes for table `country`
---
-ALTER TABLE
-  `country`
-ADD
-  PRIMARY KEY (`id`);
-
---
--- Indexes for table `dc`
---
-ALTER TABLE
-  `dc`
-ADD
-  PRIMARY KEY (`id`);
-
---
--- Indexes for table `delivery_boy`
---
-ALTER TABLE
-  `delivery_boy`
-ADD
-  PRIMARY KEY (`id`);
-
---
--- Indexes for table `dv_time`
---
-ALTER TABLE
-  `dv_time`
-ADD
-  PRIMARY KEY (`id`);
-
---
--- Indexes for table `filter`
---
-ALTER TABLE
-  `filter`
-ADD
-  PRIMARY KEY (`id`);
-
---
--- Indexes for table `isue`
---
-ALTER TABLE
-  `isue`
-ADD
-  PRIMARY KEY (`id`);
-
---
--- Indexes for table `ofd`
---
-ALTER TABLE
-  `ofd`
-ADD
-  PRIMARY KEY (`id`);
-
---
--- Indexes for table `orders`
---
-ALTER TABLE
-  `orders`
-ADD
-  PRIMARY KEY (`id`);
-
---
--- Indexes for table `order_detail`
---
-ALTER TABLE
-  `order_detail`
-ADD
-  PRIMARY KEY (`id`);
-
---
--- Indexes for table `order_status`
---
-ALTER TABLE
-  `order_status`
-ADD
-  PRIMARY KEY (`id`);
-
---
--- Indexes for table `order_stlmnt`
---
-ALTER TABLE
-  `order_stlmnt`
-ADD
-  PRIMARY KEY (`id`);
-
---
--- Indexes for table `order_time`
---
-ALTER TABLE
-  `order_time`
-ADD
-  PRIMARY KEY (`id`);
-
---
--- Indexes for table `pin`
---
-ALTER TABLE
-  `pin`
-ADD
-  PRIMARY KEY (`id`);
-
---
--- Indexes for table `product`
---
-ALTER TABLE
-  `product`
-ADD
-  PRIMARY KEY (`id`);
-
---
--- Indexes for table `product_ad_on`
---
-ALTER TABLE
-  `product_ad_on`
-ADD
-  PRIMARY KEY (`id`);
-
---
--- Indexes for table `promo`
---
-ALTER TABLE
-  `promo`
-ADD
-  PRIMARY KEY (`id`);
-
---
--- Indexes for table `p_filter`
---
-ALTER TABLE
-  `p_filter`
-ADD
-  PRIMARY KEY (`id`);
-
---
--- Indexes for table `p_reject`
---
-ALTER TABLE
-  `p_reject`
-ADD
-  PRIMARY KEY (`id`);
-
---
--- Indexes for table `p_sfilter`
---
-ALTER TABLE
-  `p_sfilter`
-ADD
-  PRIMARY KEY (`id`);
-
---
--- Indexes for table `rejection`
---
-ALTER TABLE
-  `rejection`
-ADD
-  PRIMARY KEY (`id`);
-
---
--- Indexes for table `sellers`
---
-ALTER TABLE
-  `sellers`
-ADD
-  PRIMARY KEY (`id`);
-
---
--- Indexes for table `seller_wallet`
---
-ALTER TABLE
-  `seller_wallet`
-ADD
-  PRIMARY KEY (`id`);
-
---
--- Indexes for table `seller_w_msg`
---
-ALTER TABLE
-  `seller_w_msg`
-ADD
-  PRIMARY KEY (`id`);
-
---
--- Indexes for table `state`
---
-ALTER TABLE
-  `state`
-ADD
-  PRIMARY KEY (`id`);
-
---
--- Indexes for table `subcategories`
---
-ALTER TABLE
-  `subcategories`
-ADD
-  PRIMARY KEY (`id`);
-
---
--- Indexes for table `sub_filter`
---
-ALTER TABLE
-  `sub_filter`
-ADD
-  PRIMARY KEY (`id`);
-
---
--- Indexes for table `users`
---
-ALTER TABLE
-  `users`
-ADD
-  PRIMARY KEY (`id`);
-
---
--- Indexes for table `user_address`
---
-ALTER TABLE
-  `user_address`
-ADD
-  PRIMARY KEY (`id`);
-
---
--- Indexes for table `user_wallet`
---
-ALTER TABLE
-  `user_wallet`
-ADD
-  PRIMARY KEY (`id`);
-
---
--- Indexes for table `user_w_msg`
---
-ALTER TABLE
-  `user_w_msg`
-ADD
-  PRIMARY KEY (`id`);
-
---
--- Indexes for table `wishlist`
---
-ALTER TABLE
-  `wishlist`
-ADD
-  PRIMARY KEY (`id`);
-
---
--- Indexes for table `witdraw_req`
---
-ALTER TABLE
-  `witdraw_req`
-ADD
-  PRIMARY KEY (`id`);
-
---
--- AUTO_INCREMENT for dumped tables
---
---
--- AUTO_INCREMENT for table `admin`
---
-ALTER TABLE
-  `admin`
-MODIFY
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  AUTO_INCREMENT = 2;
-
---
--- AUTO_INCREMENT for table `assigned_orders`
---
-ALTER TABLE
-  `assigned_orders`
-MODIFY
-  `id` int(11) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT for table `business_type`
---
-ALTER TABLE
-  `business_type`
-MODIFY
-  `id` int(11) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT for table `cart`
---
-ALTER TABLE
-  `cart`
-MODIFY
-  `id` int(11) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT for table `cart_detail`
---
-ALTER TABLE
-  `cart_detail`
-MODIFY
-  `id` int(11) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT for table `categories`
---
-ALTER TABLE
-  `categories`
-MODIFY
-  `id` int(11) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT for table `city`
---
-ALTER TABLE
-  `city`
-MODIFY
-  `id` int(11) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT for table `cnfrm_delivery`
---
-ALTER TABLE
-  `cnfrm_delivery`
-MODIFY
-  `id` int(11) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT for table `cnfrm_undelivery`
---
-ALTER TABLE
-  `cnfrm_undelivery`
-MODIFY
-  `id` int(11) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT for table `commission`
---
-ALTER TABLE
-  `commission`
-MODIFY
-  `id` int(11) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT for table `country`
---
-ALTER TABLE
-  `country`
-MODIFY
-  `id` int(11) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT for table `dc`
---
-ALTER TABLE
-  `dc`
-MODIFY
-  `id` int(11) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT for table `delivery_boy`
---
-ALTER TABLE
-  `delivery_boy`
-MODIFY
-  `id` int(11) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT for table `dv_time`
---
-ALTER TABLE
-  `dv_time`
-MODIFY
-  `id` int(11) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT for table `filter`
---
-ALTER TABLE
-  `filter`
-MODIFY
-  `id` int(11) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT for table `isue`
---
-ALTER TABLE
-  `isue`
-MODIFY
-  `id` int(11) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT for table `ofd`
---
-ALTER TABLE
-  `ofd`
-MODIFY
-  `id` int(11) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT for table `orders`
---
-ALTER TABLE
-  `orders`
-MODIFY
-  `id` int(11) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT for table `order_detail`
---
-ALTER TABLE
-  `order_detail`
-MODIFY
-  `id` int(11) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT for table `order_status`
---
-ALTER TABLE
-  `order_status`
-MODIFY
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  AUTO_INCREMENT = 8;
-
---
--- AUTO_INCREMENT for table `order_stlmnt`
---
-ALTER TABLE
-  `order_stlmnt`
-MODIFY
-  `id` int(11) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT for table `order_time`
---
-ALTER TABLE
-  `order_time`
-MODIFY
-  `id` int(11) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT for table `pin`
---
-ALTER TABLE
-  `pin`
-MODIFY
-  `id` int(11) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT for table `product`
---
-ALTER TABLE
-  `product`
-MODIFY
-  `id` int(11) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT for table `product_ad_on`
---
-ALTER TABLE
-  `product_ad_on`
-MODIFY
-  `id` int(11) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT for table `promo`
---
-ALTER TABLE
-  `promo`
-MODIFY
-  `id` int(11) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT for table `p_filter`
---
-ALTER TABLE
-  `p_filter`
-MODIFY
-  `id` int(11) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT for table `p_reject`
---
-ALTER TABLE
-  `p_reject`
-MODIFY
-  `id` int(11) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT for table `p_sfilter`
---
-ALTER TABLE
-  `p_sfilter`
-MODIFY
-  `id` int(11) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT for table `rejection`
---
-ALTER TABLE
-  `rejection`
-MODIFY
-  `id` int(11) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT for table `sellers`
---
-ALTER TABLE
-  `sellers`
-MODIFY
-  `id` int(11) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT for table `seller_wallet`
---
-ALTER TABLE
-  `seller_wallet`
-MODIFY
-  `id` int(11) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT for table `seller_w_msg`
---
-ALTER TABLE
-  `seller_w_msg`
-MODIFY
-  `id` int(11) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT for table `state`
---
-ALTER TABLE
-  `state`
-MODIFY
-  `id` int(11) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT for table `subcategories`
---
-ALTER TABLE
-  `subcategories`
-MODIFY
-  `id` int(11) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT for table `sub_filter`
---
-ALTER TABLE
-  `sub_filter`
-MODIFY
-  `id` int(11) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT for table `users`
---
-ALTER TABLE
-  `users`
-MODIFY
-  `id` int(11) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT for table `user_address`
---
-ALTER TABLE
-  `user_address`
-MODIFY
-  `id` int(11) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT for table `user_wallet`
---
-ALTER TABLE
-  `user_wallet`
-MODIFY
-  `id` int(11) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT for table `user_w_msg`
---
-ALTER TABLE
-  `user_w_msg`
-MODIFY
-  `id` int(11) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT for table `wishlist`
---
-ALTER TABLE
-  `wishlist`
-MODIFY
-  `id` int(11) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT for table `witdraw_req`
---
-ALTER TABLE
-  `witdraw_req`
-MODIFY
-  `id` int(11) NOT NULL AUTO_INCREMENT;
-
-COMMIT;
-
-/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */
-;
-
-/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */
-;
-
-/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */
-;
--- ============================================
--- SISTER MAU CUSTOMIZATIONS
--- ============================================
-
--- Add image column to categories (MySQL compatible way)
-SET @col_exists = (SELECT COUNT(*) 
-    FROM INFORMATION_SCHEMA.COLUMNS 
-    WHERE TABLE_SCHEMA = 'grocerry' 
-    AND TABLE_NAME = 'categories' 
-    AND COLUMN_NAME = 'image');
-
-SET @query = IF(@col_exists = 0, 
-    'ALTER TABLE categories ADD COLUMN image VARCHAR(255) AFTER category', 
-    'SELECT "Column already exists" AS info');
-
-PREPARE stmt FROM @query;
-EXECUTE stmt;
-DEALLOCATE PREPARE stmt;
-
--- Clear and populate categories
-DELETE FROM categories;
-INSERT INTO categories (id, category, image, status) VALUES
-(1, 'TVs', 'samsung-tv.jpg', 1),
-(2, 'Surround Sounds', 'soundbar.jpg', 1),
-(3, 'Furniture', 'furniture.jpg', 1),
-(4, 'Cars', 'car.jpg', 1),
-(5, 'Laptops', 'laptop.jpg', 1);
-
--- Create admin account
-DELETE FROM admin;
-INSERT INTO admin (username, password) VALUES ('admin', MD5('admin123'));
-
--- ============================================
--- END CUSTOMIZATIONS
--- ============================================
+  `isnew` int NOT NULL DEFAULT '0',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `witdraw_req`
+--
+
+LOCK TABLES `witdraw_req` WRITE;
+/*!40000 ALTER TABLE `witdraw_req` DISABLE KEYS */;
+/*!40000 ALTER TABLE `witdraw_req` ENABLE KEYS */;
+UNLOCK TABLES;
+SET @@SESSION.SQL_LOG_BIN = @MYSQLDUMP_TEMP_LOG_BIN;
+/*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
+
+/*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
+/*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
+/*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+/*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
+
+-- Dump completed on 2025-12-09  3:22:38

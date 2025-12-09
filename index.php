@@ -22,30 +22,41 @@ $product_result = mysqli_query($con, $product_query);
         *{margin:0;padding:0;box-sizing:border-box}
         :root{--primary-blue:#0046BE;--dark-blue:#001E3C;--orange:#FF6B35}
         body{font-family:'Segoe UI',Arial,sans-serif;background:#fff}
-        .hero-static{background:linear-gradient(135deg,var(--primary-blue),var(--dark-blue));color:#fff;padding:60px 20px;text-align:center;margin-bottom:40px}
-        .hero-static h1{font-size:42px;margin-bottom:15px}
-        .hero-static p{font-size:18px;opacity:.9}
+        
+        /* FIXED: Better vertical centering for hero */
+        .hero-static{
+            background:linear-gradient(135deg,var(--primary-blue),var(--dark-blue));
+            color:#fff;
+            padding:80px 20px;
+            text-align:center;
+            margin-bottom:40px;
+            display:flex;
+            flex-direction:column;
+            align-items:center;
+            justify-content:center;
+            min-height:200px;
+        }
+        .hero-static h1{font-size:42px;margin-bottom:15px;line-height:1.2}
+        .hero-static p{font-size:18px;opacity:.9;max-width:800px}
+        
         .category-section{max-width:1400px;margin:50px auto;padding:0 20px}
         .section-title{font-size:32px;margin-bottom:30px;color:#333}
         
-        /* Category Grid with REAL IMAGES (Best Buy style) */
+        /* Category Grid with REAL IMAGES */
         .category-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:20px;margin-bottom:60px}
         .category-card{
             background:#fff;border:1px solid #e0e0e0;border-radius:8px;
             padding:20px;text-align:center;text-decoration:none;
             color:#333;transition:all .3s;overflow:hidden;
-            position:relative;
         }
         .category-card:hover{border-color:var(--primary-blue);transform:translateY(-3px);box-shadow:0 4px 12px rgba(0,70,190,.15)}
         
-        /* Category Image (like Best Buy) */
         .category-image{
             width:100%;height:180px;margin-bottom:15px;
             display:flex;align-items:center;justify-content:center;
             background:#f5f5f5;border-radius:8px;overflow:hidden;
         }
         .category-image img{max-width:100%;max-height:100%;object-fit:contain}
-        
         .category-name{font-size:16px;font-weight:600;color:#1d252c}
         
         /* Product Grid */
@@ -72,8 +83,7 @@ $product_result = mysqli_query($con, $product_query);
 <?php include 'require/top.php'; ?>
 
 <div class="hero-static">
-    <h1>Shop deals by category</h1>
-    <p>Electronics, Furniture & Building Equipment - All in One Place</p>
+    <h1>Electronics, Furniture & Building Equipment - All in One Place</h1>
 </div>
 
 <div class="category-section">
